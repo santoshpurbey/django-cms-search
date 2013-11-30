@@ -65,7 +65,8 @@ class GetTransFieldTag(AsTag):
             return self.EMPTY_VALUE
 
     def _is_truthy(self, value):
-        if isinstance(value, haystack.fields.NOT_PROVIDED):
+        from haystack.fields import NOT_PROVIDED
+        if isinstance(value, NOT_PROVIDED):
             return False
         elif isinstance(value, basestring) and value.startswith('<haystack.fields.NOT_PROVIDED instance at '): #UUUGLY!!
             return False
