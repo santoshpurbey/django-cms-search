@@ -47,6 +47,7 @@ def _get_index_base():
 rf = RequestFactory()
 
 def page_index_factory(language_code):
+    from cms.models import Page
 
     class _PageIndex(_get_index_base()):
         _language = language_code
@@ -67,6 +68,7 @@ def page_index_factory(language_code):
                 request = rf.get("/")
                 request.session = {}
                 request.LANGUAGE_CODE = self._language
+                request.current_page = Page.objects.get(pk=obj.pk)
                 self.prepared_data = super(_PageIndex, self).prepare(obj)
                 plugins = CMSPlugin.objects.filter(language=language_code, placeholder__in=obj.placeholders.all())
                 text = u''
